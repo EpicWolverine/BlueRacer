@@ -22,8 +22,9 @@ import sys          # for various I/O functions
 import urllib2      # URL fetching and handleing
 import re           # regular expression support
 import smtplib      # email sending support
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart   # email creation
+from email.mime.text import MIMEText             # more email creation
+import time         # datetime support
 
 def main():
     sendEmail(sys.argv[3], "test@example.com", sys.argv[2], wget(sys.argv[1]))
@@ -49,21 +50,23 @@ def wget(url):
         print 'problem reading url:', url
         
 def sendEmail(receiver, sender, comicName, imgURL):
+    # create datetime string
+    emailDate = time.strftime("%A, %B %d, %Y")
     # Create message container - the correct MIME type is multipart/alternative.
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = comicName + "for %A, %B %d, %Y"
+    msg['Subject'] = comicName + " for " + emailDate
     msg['From'] = sender
     msg['To'] = receiver
 
     # Create the body of the message (a plain-text and an HTML version).
-    text = comicName + "for %A, %B %d, %Y\n" + imgURL + "\n\nSent with BlueRacer: https://github.com/EpicWolverine/BlueRacer"
+    text = comicName + " for " + emailDate + "\n" + imgURL + "\n\nSent with BlueRacer (https://github.com/EpicWolverine/BlueRacer)"
     html = """\
     <html>
       <head></head>
       <body>
         <center>
             <p>
-               <h1>""" + comicName + """for %A, %B %d, %Y<br>
+               <h2>""" + comicName + """ for """ + emailDate + """</h2><br>
                <img src=\"""" + imgURL + """\" alt=\"""" + imgURL + """\"></img><br>
                <br>
                Sent with <a href=\"https://github.com/EpicWolverine/BlueRacer\">BlueRacer</a>.
