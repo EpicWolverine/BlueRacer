@@ -27,10 +27,10 @@ from email.mime.text import MIMEText             # more email creation
 import time         # datetime support
 
 def main():
-    sendEmail(sys.argv[3], "test@example.com", sys.argv[2], wget(sys.argv[1]))
+    sendEmail(sys.argv[3], "test@example.com", sys.argv[2], getComic(sys.argv[1]))
 
     
-def wget(url):
+def getComic(url):
     try:
         page = urllib2.urlopen(urllib2.Request(url,headers={'User-Agent': 'Mozilla/5.0'}))
         #print page.read()
@@ -38,7 +38,7 @@ def wget(url):
         if re.search(r'gocomics.com', url):
             comic = re.search(r'<meta\sname="twitter:image"\scontent="([\w\s\W]+?)"\s/>', page.read())
             if comic:
-                print comic.group(1)
+                #print comic.group(1)
                 return comic.group(1)
             else:
                 print "Comic image not found."
