@@ -9,16 +9,18 @@ The [Blue Racer](https://en.wikipedia.org/wiki/Coluber_constrictor_foxii) is a s
 Usage
 ===========
 
-**./blueracer.py _[pageURL]_ _[comicTitle]_ _[email]_**  
-Example: ./blueracer.py http://gocomics.com/Garfield/ Garfield epicwolverine@example.com
+    ./blueracer.py [pageURL] [comicTitle] [email]  
+    ./blueracer.py http://gocomics.com/calvinandhobbes/ "Calvin and Hobbes" epicwolverine@example.com
 
-BlueRacer is written in Python 2.7.3. While Python 2.7.3 is the only version of Python BlueRacer officially supports, it may work in older or newer versions of Python but this has not been tested. BlueRacer also requires a SMTP server to be installed and running in order to send emails. I have this working on Linux with sendmail, but it should also work on Windows (and other platforms) if you can find a one to use.
+BlueRacer is written in Python 2.7.3. While Python 2.7.3 is the only version of Python BlueRacer officially supports, it may work in older or newer versions of Python but this has not been tested. BlueRacer also requires a SMTP server to be installed and running in order to send emails. I have this working on Linux with sendmail, but it should also work on Windows (and other platforms) if you can find a one to use. While not required to function, BlueRacer was designed to be run every morning with an automation program such as crontab. 
+
+    30 0 * * * python ~/BlueRacer/blueracer.py http://gocomics.com/garfield Garfield epicwolverine@example.com
 
 Supported Websites
 ===========
 * http://gocomics.com/[comic]/
 
-### Planned Support
+#### Planned Support
 * http://xkcd.com
 * http://dilbert.com/
 * http://arcamax.com/thefunnies/[comic]/
