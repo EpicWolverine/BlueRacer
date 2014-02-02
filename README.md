@@ -20,10 +20,13 @@ Supported Websites
 ===========
 * http://gocomics.com/[comic]/
 
-#### Planned Support
-* http://xkcd.com
-* http://dilbert.com/
-* http://arcamax.com/thefunnies/[comic]/
+Future Plans
+===========
+* Add more websites
+    * http://xkcd.com
+    * http://dilbert.com/
+    * http://arcamax.com/thefunnies/[comic]/
+* Create web front-end and sign-up service
  
 License
 ===========
