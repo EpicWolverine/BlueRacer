@@ -26,6 +26,10 @@ from email.mime.multipart import MIMEMultipart   # email creation
 from email.mime.text import MIMEText             # more email creation
 import time         # datetime support
 
+# Global Variables
+xkcdTitle = ''      # xkcd comic title support
+xkcdTitleText = ''  # xkcd comic title text support
+
 def main():
     sendEmail(sys.argv[3], '"BlueRacer" <test@example.com>', sys.argv[2], getComic(sys.argv[1]))
 
@@ -35,19 +39,32 @@ def getComic(url):
         page = urllib2.urlopen(urllib2.Request(url,headers={'User-Agent': 'Mozilla/5.0'}))
         #print page.read()
         
-        if re.search(r'gocomics.com', url):
+        if re.search(r'gocomics.com', url): # GoComics
             comic = re.search(r'<meta\sname="twitter:image"\scontent="([\w\s\W]+?)"\s/>', page.read())
             if comic:
                 #print comic.group(1)
                 return comic.group(1)
             else:
-                print "Comic image not found."
-                return
+                print "Error: Comic image not found."
+                quit()
+        elif re.search(r'xkcd.com', url): # xkcd
+            comic = re.search(r'<div\sid="comic">\s+<img\ssrc="([\w\s\W]+?)"\stitle="([\w\s\W]+?)"\salt="([\w\s\W]+?)"\s/>', page.read())
+            if comic:
+                #print comic.group(1)
+                #print comic.group(2)
+                #print comic.group(3)
+                xkcdTitle = comic.group(3)
+                xkcdTitleText = comic.group(2)
+                return comic.group(1)
+            else:
+                print "Error: Comic image not found."
+                quit()
         else:
-            print "This website is not supported."
-            return
+            print "Error: This website is not supported."
+            quit()
     except IOError:
-        print 'problem reading url:', url
+        print 'Error: Problem loading url:', url
+        quit()
         
 def sendEmail(receiver, sender, comicName, imgURL):
     # create datetime string
@@ -60,21 +77,40 @@ def sendEmail(receiver, sender, comicName, imgURL):
 
     # Create the body of the message (a plain-text and an HTML version).
     text = comicName + " for " + emailDate + "\n" + imgURL + "\n\nSent with BlueRacer (https://github.com/EpicWolverine/BlueRacer)"
-    html = """\
-    <html>
-      <head></head>
-      <body>
-        <center>
-            <p>
-               <h2>""" + comicName + """ for """ + emailDate + """</h2><br>
-               <img src=\"""" + imgURL + """\" alt=\"""" + imgURL + """\"></img><br>
-               <br>
-               Sent with <a href=\"https://github.com/EpicWolverine/BlueRacer\">BlueRacer</a>.
-            </p>
-        </center>
-      </body>
-    </html>
-    """
+    if comicName.lower() == 'xkcd':
+        html = """\
+        <html>
+          <head></head>
+          <body>
+            <center>
+                <p>
+                   <h2>""" + comicName + """ for """ + emailDate + """</h2><br>
+                   <h4>""" + xkcdTitle + """</h4><br>
+                   <img src=\"""" + imgURL + """\" alt=\"""" + imgURL + """\"></img><br>
+                   Title Text: """ + xkcdTitleText + """<br>
+                   <br>
+                   Sent with <a href=\"https://github.com/EpicWolverine/BlueRacer\">BlueRacer</a>.
+                </p>
+            </center>
+          </body>
+        </html>
+        """
+    else:
+        html = """\
+        <html>
+          <head></head>
+          <body>
+            <center>
+                <p>
+                   <h2>""" + comicName + """ for """ + emailDate + """</h2><br>
+                   <img src=\"""" + imgURL + """\" alt=\"""" + imgURL + """\"></img><br>
+                   <br>
+                   Sent with <a href=\"https://github.com/EpicWolverine/BlueRacer\">BlueRacer</a>.
+                </p>
+            </center>
+          </body>
+        </html>
+        """
     
     # Record the MIME types of both parts - text/plain and text/html.
     part1 = MIMEText(text, 'plain')
