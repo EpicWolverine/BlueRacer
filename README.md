@@ -19,13 +19,14 @@ BlueRacer is written in Python 2.7.3. While Python 2.7.3 is the only version of 
 Supported Websites
 ===========
 * http://gocomics.com/[comic]/
+* http://arcamax.com/thefunnies/[comic]/
 
 Future Plans
 ===========
 * Add more websites
-    * http://xkcd.com
-    * http://dilbert.com/
-    * http://arcamax.com/thefunnies/[comic]/
+    * http://xkcd.com (initial support added; doesn't pass title and title text yet)
+    * http://www.commitstrip.com/
+* Auto-checks for comics and saves image urls (to prevent sending duplicates and allow for other features)
 * Create web front-end and sign-up service
  
 License
