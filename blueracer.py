@@ -26,10 +26,6 @@ from email.mime.multipart import MIMEMultipart   # email creation
 from email.mime.text import MIMEText             # more email creation
 import time         # datetime support
 
-# Global Variables
-xkcdTitle = ''      # xkcd comic title support
-xkcdTitleText = ''  # xkcd comic title text support
-
 def main():
     sendEmail(sys.argv[3], '"BlueRacer" <test@example.com>', sys.argv[2], getComic(sys.argv[1]))
 
@@ -55,6 +51,14 @@ def getComic(url):
                 #print comic.group(3)
                 xkcdTitle = comic.group(3)
                 xkcdTitleText = comic.group(2)
+                return comic.group(1)
+            else:
+                print "Error: Comic image not found."
+                quit()
+        elif re.search(r'arcamax.com', url): # arcamax
+            comic = re.search(r'<a\shref="[\w\s\W]+?"><img\ssrc="([\w\s\W]+?)"\salt="[\w\s\W]+?"\srel="image_src">', page.read())
+            if comic:
+                #print comic.group(1)
                 return comic.group(1)
             else:
                 print "Error: Comic image not found."
