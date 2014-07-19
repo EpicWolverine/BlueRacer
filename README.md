@@ -20,12 +20,13 @@ Supported Websites
 ===========
 * http://gocomics.com/[comic]/
 * http://arcamax.com/thefunnies/[comic]/
+* http://commitstrip.com/en/ and http://commitstrip.com/fr/
+* http://xkcd.com/ (partial; doesn't pass title and title text yet)
 
 Future Plans
 ===========
 * Add more websites
-    * http://xkcd.com (initial support added; doesn't pass title and title text yet)
-    * http://www.commitstrip.com/
+    * http://www.foxtrot.com/
 * Auto-checks for comics and saves image urls (to prevent sending duplicates and allow for other features)
 * Create web front-end and sign-up service
  
