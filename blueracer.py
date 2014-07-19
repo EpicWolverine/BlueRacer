@@ -35,7 +35,7 @@ def getComic(url):
         page = urllib2.urlopen(urllib2.Request(url,headers={'User-Agent': 'Mozilla/5.0'}))
         #print page.read()
         
-        if re.search(r'gocomics.com', url): # GoComics
+        if re.search(r'gocomics\.com', url): # GoComics
             comic = re.search(r'<meta\sname="twitter:image"\scontent="([\w\s\W]+?)"\s/>', page.read())
             if comic:
                 #print comic.group(1)
@@ -43,7 +43,7 @@ def getComic(url):
             else:
                 print "Error: Comic image not found."
                 quit()
-        elif re.search(r'xkcd.com', url): # xkcd
+        elif re.search(r'xkcd\.com', url): # xkcd
             comic = re.search(r'<div\sid="comic">\s+<img\ssrc="([\w\s\W]+?)"\stitle="([\w\s\W]+?)"\salt="([\w\s\W]+?)"\s/>', page.read())
             if comic:
                 #print comic.group(1)
@@ -55,8 +55,20 @@ def getComic(url):
             else:
                 print "Error: Comic image not found."
                 quit()
-        elif re.search(r'arcamax.com', url): # arcamax
+        elif re.search(r'arcamax\.com', url): # ArcaMax
             comic = re.search(r'<a\shref="[\w\s\W]+?"><img\ssrc="([\w\s\W]+?)"\salt="[\w\s\W]+?"\srel="image_src">', page.read())
+            if comic:
+                #print comic.group(1)
+                return comic.group(1)
+            else:
+                print "Error: Comic image not found."
+                quit()
+        elif re.search(r'commitstrip\.com', url): # CommitStrip
+            if re.search(r'/en', url): # English version
+                comic = re.search(r'<div\sclass="entry-content">\s+<p><img\sclass="[\w\s\W]+?"\stitle=""\ssrc="([\w\s\W]+?)"\salt=""\swidth="[\w\s\W]+?"\sheight="[\w\s\W]+?"\s/></p>\s+</div>', page.read())
+            else: # French version
+                comic = re.search(r'<div\sclass="entry-content">\s+<p><a\shref="[\w\s\W]+?"\s><img\sclass="[\w\s\W]+?"\stitle=""\ssrc="([\w\s\W]+?)"\salt=""\swidth="[\w\s\W]+?"\sheight="[\w\s\W]+?"\s/></a></p>\s+</div>', page.read())
+            
             if comic:
                 #print comic.group(1)
                 return comic.group(1)
