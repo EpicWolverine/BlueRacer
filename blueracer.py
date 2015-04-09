@@ -56,10 +56,10 @@ def getComic(url):
                 print "Error: Comic image not found."
                 quit()
         elif re.search(r'arcamax\.com', url): # ArcaMax
-            comic = re.search(r'<a\shref="[\w\s\W]+?"><img\ssrc="([\w\s\W]+?)"\salt="[\w\s\W]+?"\srel="image_src">', page.read())
+            comic = re.search(r'<img\sid="comic-zoom"\sdata-zoom-image="[\w\s\W]+?"\ssrc="([\w\s\W]+?)"', page.read())
             if comic:
                 #print comic.group(1)
-                return comic.group(1)
+                return "http://arcamax.com" + comic.group(1)
             else:
                 print "Error: Comic image not found."
                 quit()
