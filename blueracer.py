@@ -80,8 +80,8 @@ def getComic(url):
             quit()
     except Exception:
         print 'Error: Problem loading url:', url
-	print 'Type: ' + str(sys.exc_info()[0])
-	print 'Value: ' + str(sys.exc_info()[1])
+        print 'Type: ' + str(sys.exc_info()[0])
+        print 'Value: ' + str(sys.exc_info()[1])
         quit()
         
 def sendEmail(receiver, sender, comicName, imgURL):
